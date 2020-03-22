@@ -1,16 +1,16 @@
 server {
   listen 80;
-  listen [::]:80;
+  listen   [::]:80 default ipv6only=on;
+
+  listen 443 ssl;
+  ssl on;
+  ssl_certificate /etc/ssl/certs/localhost.crt;
+  ssl_certificate_key /etc/ssl/certs/localhost.key;
+  
   server_name localhost;
   #root /usr/share/nginx/html/;
   root /var/www/;
   index index.php index.html index.htm index.nginx-debian.html;
-	ssl on;
-    ssl_certificate      /etc/ssl/certs/nginx-selfsigned.crt;
-    ssl_certificate_key  /etc/ssl/private/nginx-selfsigned.key;
-    ssl_protocols        SSLv3 TLSv1;
-    ssl_ciphers          HIGH:!aNULL:!MD5;
-    error_page			497	https://$server_name:443$request_uri;
 
   location / {
     autoindex on;
