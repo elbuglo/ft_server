@@ -24,7 +24,7 @@ cat /srcs/default > /etc/nginx/sites-available/default
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 
 ########### mysql ##################
-service mysql restart
+service mysql start
 mysql -u root < /srcs/create_database.sql
 
 service mysql restart && service php7.3-fpm restart && service nginx restart 
