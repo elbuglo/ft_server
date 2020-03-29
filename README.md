@@ -1,7 +1,7 @@
 # ft_server
 
 # Some ressources
-  * [MariaDB[](https://kifarunix.com/install-lemp-stack-on-debian-10-buster)
+  * [MariaDB](https://kifarunix.com/install-lemp-stack-on-debian-10-buster)
   * [Phpmyadmin](https://kifarunix.com/install-phpmyadmin-with-nginx-on-debian-10-buster)
   * [[Wordpress](https://kifarunix.com/install-wordpress-5-with-nginx-on-debian-10-buster/)
   * [Dockerfile](https://putaindecode.io/articles/les-dockerfiles/)
