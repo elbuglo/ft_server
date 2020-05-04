@@ -31,7 +31,7 @@ RUN	wget https://wordpress.org/latest.tar.gz; \
 ########### vhost nginx ############
 COPY srcs/default /etc/nginx/sites-available/
 
-########### SSL ###########
+########### SSL ###########d
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-subj '/C=FR/ST=75/L=Paris/O=42/CN=lulebugl' \
 	-keyout /etc/ssl/certs/localhost.key -out /etc/ssl/certs/localhost.crt
