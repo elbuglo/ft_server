@@ -19,5 +19,5 @@
   docker rmi img_lulebugl
 
 # To kill already used ports
-  sudo lsof -i tcp:80 -s tcp:listen
+  sudo lsof -i tcp:80 -s tcp:listen |  
   sudo kill "PID"
