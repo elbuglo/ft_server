@@ -1,19 +1,23 @@
 server {
-  listen 80;
-  listen   [::]:80 default ipv6only=on;
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
 
-  listen 443 ssl;
-  ssl on;
   ssl_certificate /etc/ssl/certs/localhost.crt;
   ssl_certificate_key /etc/ssl/certs/localhost.key;
   
-  server_name localhost;
+  ##server_name localhost;
+  ##  return 301 https://$host$request_uri;
+  
   #root /usr/share/nginx/html/;
   root /var/www/;
   index index.php index.html index.htm index.nginx-debian.html;
 
   location / {
-    autoindex on;
+    try_files $uri $uri/ =404;
+    autoindex %AUTO_INDEX%;
   }
 
   location /wordpress {
@@ -29,4 +33,8 @@ server {
     include fastcgi_params;
     include snippets/fastcgi-php.conf;
   }
+
+  location ~ /\.ht {
+		deny all;
+	}
 }

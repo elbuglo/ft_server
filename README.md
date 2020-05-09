@@ -10,7 +10,7 @@
   docker build -t img_lulebugl .
 
 # To run container
-  docker run -tid -p 80:80 -p 8080:8080 -p 443:443 -p 3306:3306 -p 33060:33060 --name test img_lulebgul
+  docker run -tid -p 80:80 -p 443:443 --name test img_lulebgul
 
 # To delete container(first)
   docker rm -f test
