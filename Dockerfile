@@ -24,14 +24,14 @@ RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-
 	rm phpMyAdmin-4.9.0.1-all-languages.tar.gz
 
 ########### wordpress ##############
-##COPY ./srcs/wp-config.php wp-config.php
+COPY ./srcs/wp-config.php wp-config.php
 RUN	wget https://wordpress.org/latest.tar.gz; \
 	tar xzvf latest.tar.gz; \
 	mv wordpress /var/www/; \
 	chown -R www-data:www-data /var/www/wordpress; \
-	rm latest.tar.gz; 
-	# sed -i 's/%MYSQL_PASSWORD%/'$MYSQL_PASSWORD'/g' wp-config.php ; \
-	# sed -i 's/%MYSQL_DATABASE%/'$DATABASE_NAME'/g' wp-config.php
+	rm latest.tar.gz; \
+	sed -i 's/%MYSQL_PASSWORD%/'$MYSQL_PASSWORD'/g' wp-config.php ; \
+	sed -i 's/%MYSQL_DATABASE%/'$DATABASE_NAME'/g' wp-config.php
 
 ########### vhost nginx ############
 COPY srcs/default /etc/nginx/sites-available/
@@ -44,17 +44,13 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-subj '/C=FR/ST=75/L=Paris/O=42/CN=lulebugl' \
 	-keyout /etc/ssl/certs/localhost.key -out /etc/ssl/certs/localhost.crt
 
-# RUN service mysql start; \
-# 	mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS "$DATABASE_NAME";" ; \
-# 	mysqladmin -u root -p password $MYSQL_PASSWORD
+RUN service mysql start; \
+ 	mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS "$DATABASE_NAME";" ; \
+ 	mysqladmin -u root -p password $MYSQL_PASSWORD
 
 EXPOSE 80 443
 
 CMD	service mysql start; \
 	service php7.3-fpm start; \
-	mysql -u root -p$PASSWORD -e "CREATE USER '$USERNAME'@'localhost' identified by '$PASSWORD';" ;\
-	mysql -u root -p$PASSWORD -e "CREATE DATABASE wordpress;"; \
-	mysql -u root -p$PASSWORD -e "GRANT ALL PRIVILEGES ON wordpress.* TO '$USERNAME'@'localhost';" ;\
-	mysql -u root -p$PASSWORD -e "FLUSH PRIVILEGES;"; \
 	nginx -g 'daemon off;'
 
